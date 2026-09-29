@@ -1,0 +1,14 @@
+[Unit]
+Description=Apply a verified LadderBot OTA request
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+WorkingDirectory=/opt/ladderbot
+ExecStart=/usr/bin/python3 /opt/ladderbot/updater.py apply-request
+UMask=0077
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectHome=true

@@ -1,0 +1,29 @@
+[Unit]
+Description=Ladderbot v2 Polygon
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=ladderbot
+Group=ladderbot
+WorkingDirectory=/opt/ladderbot
+ExecStart=/opt/ladderbot/.venv/bin/python /opt/ladderbot/ladderbot.py run
+Restart=on-failure
+RestartSec=15
+TimeoutStopSec=30
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/opt/ladderbot/state
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

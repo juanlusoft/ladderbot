@@ -1,0 +1,10 @@
+# Nunca subir esto a git
+state/
+secrets/ladderbot.env
+config.json
+strategies/geodnet.json
+.venv/
+__pycache__/
+*.pyc
+*.bak
+*.bak-*

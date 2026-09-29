@@ -1,0 +1,19 @@
+{
+  "budget": "0",
+  "buy": [
+    { "id": "buy_020", "price": "0.20", "pct": "50" },
+    { "id": "buy_019", "price": "0.19", "pct": "10" },
+    { "id": "buy_018", "price": "0.18", "pct": "10" },
+    { "id": "buy_017", "price": "0.17", "pct": "10" },
+    { "id": "buy_016", "price": "0.16", "pct": "10" },
+    { "id": "buy_015", "price": "0.15", "pct": "10" }
+  ],
+  "sell": [
+    { "id": "sell_025", "price": "0.25", "pct": "10" },
+    { "id": "sell_026", "price": "0.26", "pct": "10" },
+    { "id": "sell_027", "price": "0.27", "pct": "10" },
+    { "id": "sell_028", "price": "0.28", "pct": "10" },
+    { "id": "sell_029", "price": "0.29", "pct": "10" },
+    { "id": "sell_all", "price": "0.30", "all": true }
+  ]
+}

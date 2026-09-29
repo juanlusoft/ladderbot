@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "name": "ladderbot",
+  "version": "2.1.0",
+  "files": {
+    "VERSION": "c89b87c262e9d5ffd20e73aac74a1772adcc9f5a21682cc33adcf5086e5fef5c",
+    "ladderbot.py": "37962879ebdedaa1f0da3ee6ae4797bb259691dcda78edb5756e74aa93b6ba2c",
+    "telegram_cmd.py": "8ca469548c6f308a7f6ce202fc56ddb395e8d5349f774338cacf5beeba450ff5",
+    "precio_chart.py": "ab66a3dc574d4b2d769367c1d55dd42f6f99c985e6fb43226c8d1f4d8c34f9ea",
+    "updater.py": "3b49d4341376a14586474162f1db145420a28fb3e40423f3bc932ccfb15743cb",
+    "ajustar_saldo.py": "9645c4f386c3df781f9212732eb1ea33421d8581c23bb819cc45eb64c3f4c499",
+    "leer_ingresos.py": "d9ffb994c9401b50960a670fdecd3f18147063b66f0e74cedfa3c085cfb96359",
+    "ver_saldos.py": "9631134035ca3bf4b917d27a71e89d838d205ca4f3a210239ee6dd336c8dd0f8",
+    "ver_tx.py": "1df74eb8772a990346ab933cff15bb944acaef41306529f860ca157425475797"
+  }
+}

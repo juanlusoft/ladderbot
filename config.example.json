@@ -1,0 +1,20 @@
+{
+  "poll_seconds": 30,
+  "receipt_timeout": 180,
+  "transaction_deadline_seconds": 300,
+  "confirmations": 2,
+  "max_gas_gwei": 500,
+  "tokens": [
+    {
+      "id": "GEODNET",
+      "network": "polygon",
+      "strategy": "geodnet.json",
+      "erc20": "0xac0f66379a6d7801d7726d5a943356a172549adb",
+      "token_decimals": 18,
+      "pool_fee": 3000,
+      "slippage": "0.01",
+      "include_external_deposits": false,
+      "external_token_cost": "0"
+    }
+  ]
+}
