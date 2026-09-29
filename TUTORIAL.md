@@ -254,7 +254,7 @@ Y una que no es un error: **no hay `telegram_bot_token` dentro de `config.json`*
 
 ## Actualizar por OTA desde Telegram
 
-La versión 2.1.1 instala `ladderbot-update.path`, un vigilante root separado del bot
+La versión 2.1.2 instala `ladderbot-update.path`, un vigilante root separado del bot
 de Telegram. El proceso de Telegram nunca obtiene privilegios ni sobrescribe código:
 solo deja una solicitud de actualización en `state/`.
 
@@ -267,7 +267,7 @@ Con un paquete y su SHA-256:
 Para usar simplemente `/update`, el paquete ya configura esta URL HTTPS:
 
 ```dotenv
-UPDATE_MANIFEST_URL=https://raw.githubusercontent.com/juanlusoft/ladderbot/main/latest.json
+UPDATE_MANIFEST_URL=https://github.com/juanlusoft/ladderbot/releases/latest/download/latest.json
 ```
 
 Formato de `latest.json`:

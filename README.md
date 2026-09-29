@@ -1,4 +1,4 @@
-# Ladderbot v2.1.1
+# Ladderbot v2.1.2
 
 Bot de trading escalonado para **GEODNET/USDT en Polygon** (Uniswap v3), autónomo,
 con systemd. Compra y vende por peldaños de precio que tú defines en un fichero.
@@ -58,7 +58,7 @@ El comando solo se acepta desde `TELEGRAM_CHAT_ID`:
 ```
 
 El instalador deja configurado el manifiesto oficial:
-`https://raw.githubusercontent.com/juanlusoft/ladderbot/main/latest.json`.
+`https://github.com/juanlusoft/ladderbot/releases/latest/download/latest.json`.
 Por tanto, normalmente basta con `/update`; también se admite la forma explícita
 con URL y SHA-256.
 

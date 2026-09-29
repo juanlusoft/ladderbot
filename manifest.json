@@ -1,9 +1,9 @@
 {
   "schema": 1,
   "name": "ladderbot",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "files": {
-    "VERSION": "7b3ff271f1373cfb97e9e53349794e1450f3794e4c0788c54a2060c7596da821",
+    "VERSION": "9f6271951edca02e0c8a669a79930626717b77f0443ad8a327b93a52e4194829",
     "ladderbot.py": "37962879ebdedaa1f0da3ee6ae4797bb259691dcda78edb5756e74aa93b6ba2c",
     "telegram_cmd.py": "8ca469548c6f308a7f6ce202fc56ddb395e8d5349f774338cacf5beeba450ff5",
     "precio_chart.py": "ab66a3dc574d4b2d769367c1d55dd42f6f99c985e6fb43226c8d1f4d8c34f9ea",
