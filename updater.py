@@ -195,7 +195,9 @@ def install_release(root: Path, manifest: dict, install: Path, restart: bool = T
             temporary = target.with_name(target.name + ".ota-new")
             shutil.copy2(source, temporary)
             os.chown(temporary, 0, 0)
-            os.chmod(temporary, 0o700 if relative.endswith(".py") else 0o644)
+            # Los scripts son root:root, pero los servicios se ejecutan como
+            # `ladderbot`; necesitan permiso de lectura/ejecución.
+            os.chmod(temporary, 0o755 if relative.endswith(".py") else 0o644)
             os.replace(temporary, target)
         run_checked([sys.executable, "-m", "py_compile"] + [
             str(install / name) for name in manifest["files"] if name.endswith(".py")

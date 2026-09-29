@@ -254,7 +254,7 @@ Y una que no es un error: **no hay `telegram_bot_token` dentro de `config.json`*
 
 ## Actualizar por OTA desde Telegram
 
-La versión 2.1 instala `ladderbot-update.path`, un vigilante root separado del bot
+La versión 2.1.1 instala `ladderbot-update.path`, un vigilante root separado del bot
 de Telegram. El proceso de Telegram nunca obtiene privilegios ni sobrescribe código:
 solo deja una solicitud de actualización en `state/`.
 

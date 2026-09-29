@@ -73,7 +73,7 @@ chown -R ladderbot:ladderbot "$DEST"
 chown -R root:root "$DEST"/*.py "$DEST/VERSION" "$DEST/requirements.txt" "$DEST/requirements.lock"
 chmod 0700 "$DEST/secrets" "$DEST/state"
 chmod 0600 "$DEST/secrets/ladderbot.env"
-chmod 0700 "$DEST/ladderbot.py"
+chmod 0755 "$DEST"/*.py
 # el bot reescribe la estrategia (ajustar_saldo.py), así que su carpeta es suya
 chown -R ladderbot:ladderbot "$DEST/strategies"
 

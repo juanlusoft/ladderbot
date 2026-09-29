@@ -1,4 +1,4 @@
-# Ladderbot v2.1.0
+# Ladderbot v2.1.1
 
 Bot de trading escalonado para **GEODNET/USDT en Polygon** (Uniswap v3), autónomo,
 con systemd. Compra y vende por peldaños de precio que tú defines en un fichero.
