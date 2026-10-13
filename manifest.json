@@ -1,14 +1,14 @@
 {
   "schema": 1,
   "name": "ladderbot",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "files": {
-    "VERSION": "9f6271951edca02e0c8a669a79930626717b77f0443ad8a327b93a52e4194829",
-    "ladderbot.py": "37962879ebdedaa1f0da3ee6ae4797bb259691dcda78edb5756e74aa93b6ba2c",
+    "VERSION": "eb01a4e8e8922406f15a22cadc3fae28d4f513afe11b4734788eb2ea73cf034e",
+    "ladderbot.py": "e386da2011a60e71f3f7ea59fa27961c037693db8472cea5e67acbe3a473729d",
     "telegram_cmd.py": "8ca469548c6f308a7f6ce202fc56ddb395e8d5349f774338cacf5beeba450ff5",
     "precio_chart.py": "ab66a3dc574d4b2d769367c1d55dd42f6f99c985e6fb43226c8d1f4d8c34f9ea",
     "updater.py": "28d2ae563fee9a79b93f22f8350f583217991b4b61c652390a295aecf1ec4fbb",
-    "ajustar_saldo.py": "9645c4f386c3df781f9212732eb1ea33421d8581c23bb819cc45eb64c3f4c499",
+    "ajustar_saldo.py": "3a4eccb4ad25b665b8d0a52d9e63999a9e1ce8e591a80498ee669a54bc614dca",
     "leer_ingresos.py": "d9ffb994c9401b50960a670fdecd3f18147063b66f0e74cedfa3c085cfb96359",
     "ver_saldos.py": "9631134035ca3bf4b917d27a71e89d838d205ca4f3a210239ee6dd336c8dd0f8",
     "ver_tx.py": "1df74eb8772a990346ab933cff15bb944acaef41306529f860ca157425475797"

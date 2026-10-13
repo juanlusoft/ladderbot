@@ -13,7 +13,7 @@
       "token_decimals": 18,
       "pool_fee": 3000,
       "slippage": "0.01",
-      "include_external_deposits": false,
+      "include_external_deposits": true,
       "external_token_cost": "0"
     }
   ]

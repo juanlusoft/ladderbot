@@ -463,6 +463,9 @@ def new_state(token_id: str, strategy: dict[str, Any], baseline: Decimal | None)
         "total_received": "0",
         "buy_filled": [],
         "sell_filled": [],
+        # Las ventas parciales solo se habilitan después de una compra del bot.
+        # El peldaño final con `all: true` permanece siempre disponible.
+        "sell_unlocked": False,
         "last_wallet_balance": dstr(baseline) if baseline is not None else None,
         "pending": None,
         "paused": False,
@@ -549,6 +552,17 @@ def _update_avg_cost(state: dict[str, Any], tokens: Decimal, cost: Decimal) -> N
     state["avg_cost"] = dstr((previous_cost + cost) / total if total else Decimal(0))
 
 
+def include_external_deposits(token: dict[str, Any]) -> bool:
+    """GEOD minado se gestiona desde v2.1.3 incluso con config antigua.
+
+    Las instalaciones v2.1.2 se distribuyeron con el valor explícito `false`.
+    La migración debe funcionar solo con `/update`, sin editar config.json.
+    """
+    if token.get("id") == "GEODNET":
+        return True
+    return bool(token.get("include_external_deposits", False))
+
+
 def sync_external_position(w3, account, token: dict[str, Any], strategy: dict[str, Any], state: dict[str, Any]) -> None:
     _, _, _, _, _, token_c = contracts(w3, token)
     actual = human(balance_raw(token_c, account.address), int(token["token_decimals"]))
@@ -562,7 +576,7 @@ def sync_external_position(w3, account, token: dict[str, Any], strategy: dict[st
     if delta == 0:
         return
     managed = dec(state["position"], "position")
-    if delta > 0 and token.get("include_external_deposits", False):
+    if delta > 0 and include_external_deposits(token):
         external_cost = dec(token.get("external_token_cost", 0), "external_token_cost")
         _update_avg_cost(state, delta, delta * external_cost)
         state["position"] = dstr(managed + delta)
@@ -740,14 +754,22 @@ def apply_trade(
         state["total_spent"] = dstr(dec(state["total_spent"]) + usdt)
         state["buy_filled"].append(rung_id)
         state["sell_filled"] = []
+        state["sell_unlocked"] = True
         realized = Decimal(0)
     else:
         realized = usdt - tokens * dec(state["avg_cost"])
         state["position"] = dstr(max(Decimal(0), dec(state["position"]) - tokens))
         state["cash_available"] = dstr(dec(state["cash_available"]) + usdt)
         state["total_received"] = dstr(dec(state["total_received"]) + usdt)
-        state["sell_filled"].append(rung_id)
+        if rung_id == "sell_0299_all":
+            state["sell_filled"] = [
+                filled for filled in state["sell_filled"] if filled != rung_id
+            ]
+        elif rung_id not in state["sell_filled"]:
+            state["sell_filled"].append(rung_id)
         state["buy_filled"] = []
+        if rung_id == "sell_0299_all" or dec(state["position"]) <= 0:
+            state["sell_unlocked"] = False
     entry = {
         "ts": now(), "side": side, "rung_id": rung_id,
         "tokens": dstr(tokens), "usdt": dstr(usdt), "price": dstr(price),
@@ -959,7 +981,11 @@ def check_live_token(w3, account, cfg, token, strategy, secrets) -> None:
     if position <= 0:
         return
     for rung in sorted(strategy["sell"], key=lambda row: dec(row["price"])):
-        if rung["id"] in state["sell_filled"]:
+        if rung["id"] in state["sell_filled"] and not rung.get("all"):
+            continue
+        # Las ventas parciales 0.25-0.29 necesitan una compra previa. La venta
+        # final (`all`) es la única palanca que permanece siempre activa.
+        if not rung.get("all") and not state.get("sell_unlocked", False):
             continue
         amount = position if rung.get("all") else position * dec(rung["pct"]) / 100
         amount_in_raw = raw_amount(amount, int(token["token_decimals"]))
@@ -1010,7 +1036,9 @@ def check_dry_token(w3, token, strategy) -> None:
     if position <= 0:
         return
     for rung in sorted(strategy["sell"], key=lambda row: dec(row["price"])):
-        if rung["id"] in state["sell_filled"]:
+        if rung["id"] in state["sell_filled"] and not rung.get("all"):
+            continue
+        if not rung.get("all") and not state.get("sell_unlocked", False):
             continue
         amount = position if rung.get("all") else position * dec(rung["pct"]) / 100
         raw_in = raw_amount(amount, int(token["token_decimals"]))
@@ -1110,6 +1138,7 @@ def status(dry_run: bool) -> None:
             f"{token['id']:12} px={price_text} budget={state['budget']} "
             f"cash={state['cash_available']} pos={state['position']} avg={state['avg_cost']} "
             f"buys={len(state['buy_filled'])} sells={len(state['sell_filled'])} "
+            f"sell_unlocked={state.get('sell_unlocked', False)} "
             f"pending={pending_text} {'PAUSED' if state.get('paused') else ''}"
         )
 
@@ -1172,6 +1201,7 @@ def reconcile(args) -> None:
         state["total_spent"] = dstr(dec(legacy.get("total_spent", 0)))
         state["total_received"] = dstr(dec(legacy.get("total_received", 0)))
         state["history"] = list(legacy.get("history", []))[-1000:]
+        state["sell_unlocked"] = bool(legacy.get("sell_unlocked", False))
     if legacy and not args.reset_rungs:
         for side in ("buy", "sell"):
             by_price = {dec(row["price"]): row["id"] for row in strategy[side]}

@@ -1,4 +1,4 @@
-# Ladderbot v2.1.2
+# Ladderbot v2.1.3
 
 Bot de trading escalonado para **GEODNET/USDT en Polygon** (Uniswap v3), autónomo,
 con systemd. Compra y vende por peldaños de precio que tú defines en un fichero.
@@ -19,7 +19,7 @@ con systemd. Compra y vende por peldaños de precio que tú defines en un ficher
 | `ver_saldos.py` | Ver saldos, gas, allowance y precio actual |
 | `ver_tx.py <hash>` | Ver el recibo de una transacción y lo que movió de verdad |
 | `leer_ingresos.py [días]` | Ver a qué hora llegan los tokens de minero |
-| `ajustar_saldo.py` | Ajusta presupuesto y posición al saldo real de la wallet y re-arma la escalera. Pensado para un cron diario |
+| `ajustar_saldo.py` | Ajusta presupuesto y posición al saldo real sin rearmar ventas. Pensado para un cron diario |
 | `telegram_cmd.py` | Comandos `/p`, `/version`, `/update` y `/help` |
 | `precio_chart.py` | Precio real y gráfico de 24 horas |
 | `updater.py` | OTA verificada con SHA-256, manifiesto, backup y rollback |
@@ -43,7 +43,9 @@ $BOT status [--dry-run] / report / pause --token X / resume --token X
 - El precio de cada peldaño es **límite duro** del swap, no una sugerencia.
 - La transacción firmada se guarda **antes** de enviarla: si hay timeout, no repite el swap.
 - Estado viejo, corrupto o con estrategia distinta **detiene el bot** en vez de reiniciar la escalera.
-- Sin `--manage-current-position`, solo gestiona los tokens que él mismo compra: no toca lo que ya hubiera en la wallet.
+- Los GEOD minados se incorporan a la posición gestionada, pero no desbloquean ventas parciales.
+- Las ventas parciales de 0,25 a 0,29 solo se habilitan después de una compra del bot.
+- La venta total final de 0,299 permanece siempre activa y vuelve a quedar disponible tras cada ciclo.
 - RPC con failover: PublicNode como primario y dRPC gratuito como respaldo.
 - La OTA no toca `config.json`, `strategies/`, `secrets/` ni `state/`.
 - `/update` se niega a actuar si hay una transacción pendiente, un hash incorrecto,

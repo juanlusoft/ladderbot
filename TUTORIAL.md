@@ -254,7 +254,7 @@ Y una que no es un error: **no hay `telegram_bot_token` dentro de `config.json`*
 
 ## Actualizar por OTA desde Telegram
 
-La versión 2.1.2 instala `ladderbot-update.path`, un vigilante root separado del bot
+La versión 2.1.3 instala `ladderbot-update.path`, un vigilante root separado del bot
 de Telegram. El proceso de Telegram nunca obtiene privilegios ni sobrescribe código:
 solo deja una solicitud de actualización en `state/`.
 
@@ -280,6 +280,10 @@ La OTA se cancela si existe una transacción pendiente. Antes de reemplazar cód
 verifica dos capas de hashes y las rutas del archivo. Conserva configuración,
 estrategia, secretos y estado. Después hace `doctor`; si falla, restaura el backup
 y vuelve a arrancar la versión anterior.
+
+Desde v2.1.3 los GEOD recibidos del minado se incorporan automáticamente a la
+posición. Eso no activa las ventas parciales: los peldaños de 0,25 a 0,29 requieren
+una compra previa del bot. La venta total final de 0,299 permanece siempre activa.
 
 ---
 
