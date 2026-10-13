@@ -80,7 +80,13 @@ def safe_extract(archive: Path, destination: Path) -> Path:
                 raise ValueError(f"ruta insegura en OTA: {member.name}")
             if member.issym() or member.islnk() or not (member.isfile() or member.isdir()):
                 raise ValueError(f"tipo de entrada no permitido: {member.name}")
-        bundle.extractall(destination, filter="data")
+        # `filter="data"` solo existe desde Python 3.12. En Python 3.11 la
+        # validación cerrada de rutas y tipos anterior proporciona la misma
+        # barrera antes de extraer.
+        if sys.version_info >= (3, 12):
+            bundle.extractall(destination, filter="data")
+        else:
+            bundle.extractall(destination)
     if (destination / "manifest.json").is_file():
         return destination
     roots = [item for item in destination.iterdir() if item.is_dir()]
